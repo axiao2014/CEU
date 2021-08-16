@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Creat An Account</title>
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <a id="top"></a>
+        <div class="header">
+            <img class="logo" src="{% static 'logo.png' %}" alt="logo">
+            <h1>Call Us: (408)646-6516</h1>
+        </div>
+        <div class="main">
+            <nav class="navbar">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+                        {% if not request.session.user_id %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">Register</a>
+                        </li>
+                        {% endif %}
+                        {% if not request.session.user_id %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Log In</a>
+                        </li>
+                        {% endif %}
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="#">CEU Courses >></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">CEU Certificates</a>
+                        </li> -->
+                        {% if request.session.user_id %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="section">
+                <img class="course_icon" src="{% static 'register.png' %}" alt="Register-Now">
+                <h1>New User Registeration:</h1><br>
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <form action="/register" method="POST">
+                    {% csrf_token %}
+                    <p>Username: * <input name="username" type="text"></p><br>
+                    <p>Email Address: *<input name="email" type="text"></p><br>
+                    <p>Password: * <input name="password" type="password"></p><br>
+                    <p>Confirm Password: * <input name="confirm" type="password"></p><br>
+                    <p>First Name: * <input name="fname" type="text"></p><br>
+                    <p>Last Name: * <input name="lname" type="text"></p><br>
+                    <p><label for="type-select">License Type *:</label>
+                        <select name="ltype" id="type-select">
+                            <option value="">--Please choose an option--</option>
+                            <option value="acupuncturist">Acupuncturist</option>
+                            <option value="herbalist">Herbalist</option>
+                            <option value="physical therapist">Physical Therapist</option>
+                            <option value="chiropractor">Chiropractor</option>
+                            <option value="nurse">Nurse</option>
+                            <option value="massage therapist">Massage Therapist</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </p><br>
+                    <p><label for="type-select">License Board *:</label>
+                        <select name="lboard" id="type-select">
+                            <option value="">--Please choose an option--</option>
+                            <option value="ca">CA</option>
+                            <option value="nccaom">NCCAOM</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </p><br>
+                    <p>License Number: * <input name="lnum" type="text"></p><br>
+                    <p>License Expiration Date: * <input name="lexpire" type="date"></p><br>
+                    <button type="submit" id="btn">Register</button>
+                </form>
+        <div class="footer">
+            <a href="#top">Back To Top</a>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

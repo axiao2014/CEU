@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>CEU</title>
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <a id="top"></a>
+        <div class="header">
+            <img class="logo" src="{% static 'logo.png' %}" alt="logo">
+            <h1>Call Us: (408)646-6516</h1>
+        </div>
+        <div class="main">
+            <nav class="navbar">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+                        {% if not request.session.user_id %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register">Register</a>
+                        </li>
+                        {% endif %}
+                        {% if not request.session.user_id %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Log In</a>
+                        </li>
+                        {% endif %}
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="#">CEU Courses >></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">CEU Certificates</a>
+                        </li> -->
+                        {% if request.session.user_id %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="section">
+                <img class="course_icon" src="{% static 'login.png' %}" alt="Login">
+                <h1>Log In</h1><br>
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <form action="/login" method="post">
+                    {% csrf_token %}
+                    <p>Username: * <input name="username" type="text"></p><br>
+                    <p>Password: * <input name="password" type="password"></p>
+            
+                    <button type="submit" id="btn">Log In</button>
+                    <!-- <a href="">Forgot Username or Password?</a> -->
+                </form>
+            </div>
+        </div>
+    
+        <div class="footer">
+            <a href="#top">Back To Top</a>
+
+    </div>
+
+
+</body>
+
+</html>
