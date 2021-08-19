@@ -9,5 +9,6 @@ urlpatterns = [
     path('drop/<int:course_id>', views.drop),
     path('destroy/<int:course_id>', views.destroy),
     path('contact', views.contact),
+     path('about', views.about),
     path('logout', views.logout),
 ]
