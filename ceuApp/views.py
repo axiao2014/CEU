@@ -136,17 +136,23 @@ def drop(request, course_id):
         # 'course_added' : user.courses.get(id=course_id),
         'course_added' : user.courses.all(),
     }
-    return render(request, "add_to_cart.html", context)
+    return redirect('/cart')
 
 def cart(request):
     if 'user_id' not in request.session:
         return redirect('/')
 
     user_cart = User.objects.get(id=request.session['user_id'])
+    total = 0
+    courses = user_cart.courses.all()
+    for course in courses:
+        total += course.price
+    print(total)
 
     context = {
         # 'course_added' : user.courses.get(id=course_id),
         'course_added' : user_cart.courses.all(),
+        'total' : total,
     }
     return render(request, "add_to_cart.html", context)
     
