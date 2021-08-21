@@ -9,6 +9,7 @@ urlpatterns = [
     path('drop/<int:course_id>', views.drop),
     path('destroy/<int:course_id>', views.destroy),
     path('contact', views.contact),
-     path('about', views.about),
+    path('about', views.about),
+    path('cart', views.cart),
     path('logout', views.logout),
 ]

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add to Cart</title>
+</head>
+<body>
+    <div class="container">
+        <h3>The Cart has the following items: {{ course_added.name }}
+        </h3>
+        <a href="/">Retun to view courses</a>
+
+        <table>
+            
+            <tr>
+                <th>Course Name</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <td></td>
+            </tr>
+                
+            {% for course in course_added  %}
+            <tr>
+                <td>{{ course.name }}</td>
+                <td><input type="number"></td>
+                <td>{{ course.price }}</td>
+                {% if request.session.user_id %}
+                    <td><a href="/drop/{{course.id}}">Remove from Cart</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+        
+    </div>
+</body>
+</html>

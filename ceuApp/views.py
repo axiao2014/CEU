@@ -108,11 +108,20 @@ def logout(request):
 def add(request, course_id):
     if 'user_id' not in request.session:
         return redirect('/')
+    
     course = Course.objects.get(id=course_id)
     user = User.objects.get(id=request.session['user_id'])
     user.courses.add(course)
     user.save()
-    return redirect('/')
+    # return redirect('/')
+
+    # context = {
+    #     # 'course_added' : user.courses.get(id=course_id),
+    #     'course_added' : user.courses.all(),
+    # }
+    return redirect('/cart')
+
+    
 
 def drop(request, course_id):
     if 'user_id' not in request.session:
@@ -121,7 +130,26 @@ def drop(request, course_id):
     user = User.objects.get(id=request.session['user_id'])
     user.courses.remove(course)
     user.save()
-    return redirect('/')
+    # return redirect('/')
+    # return redirect('/add/%s' % course_id)
+    context = {
+        # 'course_added' : user.courses.get(id=course_id),
+        'course_added' : user.courses.all(),
+    }
+    return render(request, "add_to_cart.html", context)
+
+def cart(request):
+    if 'user_id' not in request.session:
+        return redirect('/')
+
+    user_cart = User.objects.get(id=request.session['user_id'])
+
+    context = {
+        # 'course_added' : user.courses.get(id=course_id),
+        'course_added' : user_cart.courses.all(),
+    }
+    return render(request, "add_to_cart.html", context)
+    
 
 def contact(request):
     return render(request, 'contact.html')
