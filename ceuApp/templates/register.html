@@ -56,7 +56,7 @@
                 </div>
             </nav>
 
-            <div class="section">
+            <!-- <div class="form-group">
                 <img class="course_icon" src="{% static 'register.png' %}" alt="Register-Now">
                 <h1>New User Registeration:</h1><br>
                 {% if messages %}
@@ -75,7 +75,7 @@
                     <p>First Name: * <input name="fname" type="text"></p><br>
                     <p>Last Name: * <input name="lname" type="text"></p><br>
                     <p><label for="type-select">License Type *:</label>
-                        <select name="ltype" id="type-select">
+                        <select name="ltype" id="type-select" class="form-control">
                             <option value="">--Please choose an option--</option>
                             <option value="acupuncturist">Acupuncturist</option>
                             <option value="herbalist">Herbalist</option>
@@ -87,7 +87,7 @@
                         </select>
                     </p><br>
                     <p><label for="type-select">License Board *:</label>
-                        <select name="lboard" id="type-select">
+                        <select name="lboard" id="type-select" class="form-control">
                             <option value="">--Please choose an option--</option>
                             <option value="ca">CA</option>
                             <option value="nccaom">NCCAOM</option>
@@ -97,14 +97,60 @@
                     <p>License Number: * <input name="lnum" type="text"></p><br>
                     <p>License Expiration Date: * <input name="lexpire" type="date"></p><br>
                     <button type="submit" id="btn">Register</button>
-                </form>
-            </div>
-        </div>
+                </form> -->
+            <form>
+                <div class="form-group">
+                    <img class="course_icon" src="{% static 'register.png' %}" alt="Register-Now">
+                    <h1>New User Registeration:</h1><br>
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <form action="/register" method="POST">
+                        {% csrf_token %}
+                        <div><label>Username: *</label><input name="username" type="text"></div>
+                        <div ><label>Email Address: *</label><input name="email" type="text"></div>
+                        <div >Password: * <input name="password" type="password"></div>
+                        <div>Confirm Password: * <input name="confirm" type="password"></div>
+                        <div>First Name: * <input name="fname" type="text"></div>
+                        <div>Last Name: * <input name="lname" type="text"></div>
+                        <div><label for="type-select">License Type *:</label>
+                            <select name="ltype" id="type-select" class="form-control">
+                                <option value="">--Please choose an option--</option>
+                                <option value="acupuncturist">Acupuncturist</option>
+                                <option value="herbalist">Herbalist</option>
+                                <option value="physical therapist">Physical Therapist</option>
+                                <option value="chiropractor">Chiropractor</option>
+                                <option value="nurse">Nurse</option>
+                                <option value="massage therapist">Massage Therapist</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div><label for="type-select">License Board *:</label>
+                            <select name="lboard" id="type-select" class="form-control">
+                                <option value="">--Please choose an option--</option>
+                                <option value="ca">CA</option>
+                                <option value="nccaom">NCCAOM</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div><br>
+                        <div>License Number: * <input name="lnum" type="text"></div><br>
+                        <div>License Expiration Date: * <input name="lexpire" type="date"></div><br>
     
-            <div class="footer">
-                <a href="#top">Back To Top</a>
-            </div>
-        
+                        <button type="submit" id="btn">Register</button>
+                    </form> 
+               
+
+                </div>
+        </div>
+
+        <div class="footer">
+            <a href="#top">Back To Top</a>
+        </div>
+
     </div>
 
 </body>

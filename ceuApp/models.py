@@ -51,7 +51,17 @@ class User(models.Model):
     email=models.EmailField()
     username=models.CharField(max_length=20)
     password=models.TextField()
+    # mailing_address=models.TextField(default="")
     courses=models.ManyToManyField(Course, related_name='courses')
+    objects = UserManager()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Order(models.Model):
+    ord_dt=models.DateField()
+    courses=models.ForeignKey(Course, related_name='ordered_courses',on_delete = models.CASCADE)
+    user=models.ForeignKey(User, related_name='user',on_delete = models.CASCADE)
     objects = UserManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

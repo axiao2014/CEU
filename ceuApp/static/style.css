@@ -77,6 +77,11 @@ font-size: 14px;
   height: 150px;
   padding: 10px;
 }
+.form-group label {
+  width: 250px;
+  display: inline-block;
+  text-align: right;
+}
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
