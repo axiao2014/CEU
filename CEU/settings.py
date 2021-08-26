@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'ceuApp',
+    'django_bootstrap_icons',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

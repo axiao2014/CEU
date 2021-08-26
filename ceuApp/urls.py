@@ -11,5 +11,6 @@ urlpatterns = [
     path('contact', views.contact),
     path('about', views.about),
     path('cart', views.cart),
+    path('create_order/<int:userid>',views.checkout),
     path('logout', views.logout),
 ]

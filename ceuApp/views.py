@@ -144,18 +144,48 @@ def cart(request):
 
     user_cart = User.objects.get(id=request.session['user_id'])
     total = 0
+    unit = 0
     courses = user_cart.courses.all()
     for course in courses:
         total += course.price
+        unit += course.unit
     print(total)
+    print(unit)
+    # print(user_cart.id)
 
     context = {
         # 'course_added' : user.courses.get(id=course_id),
         'course_added' : user_cart.courses.all(),
         'total' : total,
+        'units' : unit,
+        'user_cart' : user_cart,
     }
     return render(request, "add_to_cart.html", context)
+
+def order_no_gen():
+    largest = Order.objects.all().order_by('order_number').last()
+    return largest.order_number+1
     
+
+def checkout(request, userid):
+    print (userid)
+    user_cart = User.objects.get(id=request.session['user_id'])
+    courses_added =  user_cart.courses.all()
+    order_num = order_no_gen()
+    for course in courses_added:
+        #Create a new record in the Order table
+        Order.objects.create(users_ord = user_cart, courses_ord = course, order_number = order_num)
+        #Removing a course from the cart when the cart content is created.
+        user_cart.courses.remove(course)
+        user_cart.save()
+
+    context = {
+        'user' : User.objects.get(id=userid),
+        'orders' : Order.objects.filter(order_number = order_num),
+        'order_number' : order_num
+    }
+    return render(request,'thanks.html', context)
+
 
 def contact(request):
     return render(request, 'contact.html')

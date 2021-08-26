@@ -4,38 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add to Cart</title>
+    {% load static %}
+    <!-- {% load bootstrap_icons %} -->
+    <!-- load Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </head>
 <body>
-    <div class="container">
-        <h3>The Cart has the following items: {{ course_added.name }}
-        </h3>
-        <a href="/">Retun to view courses</a>
-
-        <table>
-            
+    <div class="container bg-light text-muted border-bottom">
+        <div class="row">
+            <div class="col-sm-4 mb-3 p-2">
+                <h3>YOUR SHOPPING CART
+                </h3>
+            </div>
+            <div class="col-sm-8">
+                <a href="/" class="float-right">Retun to View Courses</a>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8">
+                {% for course in course_added  %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><span>{{ course.name }}</span>
+                            <span class="float-right">$ {{ course.price}}</span>
+                        </h5>
+                        <p class="card-text">Units: {{ course.unit}}</p>
+                        {% if request.session.user_id %}
+                            <a href="/drop/{{course.id}}" class = "float-right">{% bs_icon 'trash' %} Remove from Cart</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+        <!-- <table class="table table-sm">
             <tr>
                 <th>Course Name</th>
-                <th>Qty</th>
+                <th>Units</th>
                 <th>Price</th>
                 <td></td>
             </tr>
-                
             {% for course in course_added  %}
             <tr>
                 <td>{{ course.name }}</td>
-                <td><input type="number"></td>
+                <td>{{ course.unit}}</td>
                 <td>{{ course.price }}</td>
                 {% if request.session.user_id %}
                     <td><a href="/drop/{{course.id}}">Remove from Cart</a></td>
                 {% endif %}
             </tr>
             {% endfor %}
-        </table>
-        <div>
-            <h1>
-                TOTAL IS: {{total}}
-            </h1>
-        </div>
+        </table> -->
+            </div>
+        <!-- <div class ='row'> -->
+            <div class="col-lg-3 bg-white border">
+                <!-- <div class="middle p-5 mb-10 bg-white"> -->
+                <h3 class="border-bottom">ORDER TOTAL</h3>
+                <div class="mb-3 bg-white">
+                    <h5>Sub Total:<b> $ {{total}}</b></h5>
+                    <p>Total Units Added: <b> {{units}} units</p>
+                    <a href="/create_order/{{user_cart.id}}"><input class="btn btn-primary" type="submit" value="Place Order"></a>
+                </div>
+            </div>
     </div>
 </body>
 </html>

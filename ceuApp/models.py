@@ -56,3 +56,13 @@ class User(models.Model):
     objects = UserManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class Order(models.Model):
+    users_ord = models.ForeignKey(User,related_name='user_added_courses',on_delete = models.CASCADE)
+    courses_ord = models.ForeignKey(Course, related_name='course_with_users',on_delete = models.CASCADE)
+    order_date = models.DateTimeField(auto_now_add=True)
+    order_number = models.IntegerField(default = 100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now = True)
+    objects = UserManager()
+    
