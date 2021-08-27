@@ -5,14 +5,105 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <!-- {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        /* {% load static %}
+        <link rel="stylesheet" href="{% static 'style.css' %}"> */
+        .navbar-brand { 
+            padding-left: 0px;
+
+        }
+        .navbar{
+            margin-bottom: 0;
+            border-radius: 0;
+            background-color: white;
+            height: 100px;
+        }
+        div.container-fluid{
+            padding-top: 40px;
+        }
+
+        .logo{
+            padding-top: ;
+            height: 55px;
+        }
+        .phone {
+            padding-top: 8px;
+        }
+        
+        .navbar-right{
+            display: inline-block;
+        }
+        .glyphicon {
+            display:inline-block;
+        }
+        .glyphicon-log-in{
+            display: inline-block;
+        }
+
+        label{
+            display: inline-block;
+            float: left;
+            clear: left;
+            width: 250px;
+            text-align: right;
+            }
+
+        input {
+            display: inline-block;
+            float: left;
+            }
+        .regbutton{
+            margin-left: 200px;
+        }
+
+        .title{
+            text-align: center;
+        }
+
+    </style>
     <title>Creat An Account</title>
 </head>
 
 <body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button> -->
+            <!-- <a class="navbar-brand" href="#"></a> -->
+            <a href="/home"><img class="logo center-block" src="/static/newnewlogo.png">  </a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+              
+            <ul class="nav navbar-nav">
+              <li><a href="/contact">Contact</a></li>
+              <li><a href="/about">About Us</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                
+              <li><h5 class="phone">Phone: (408) 646-6516</h5></li>
+              
+              {% if not request.session.user_id %}
+              <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              {% endif %}
 
-    <div id="wrapper">
+              {% if not request.session.user_id %}
+              <li><a href="/register">Register</a></li>
+              {% endif %}
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <!-- <div id="wrapper">
         <a id="top"></a>
         <div class="header">
             <img class="logo" src="{% static 'logo.png' %}" alt="logo">
@@ -35,13 +126,13 @@
                             <a class="nav-link" href="/login">Log In</a>
                         </li>
                         {% endif %}
-                        <!-- <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" href="#">CEU Courses >></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">CEU Certificates</a>
                         </li> -->
-                        {% if request.session.user_id %}
+                        <!-- {% if request.session.user_id %}
                         <li class="nav-item">
                             <a class="nav-link" href="/logout">Logout</a>
                         </li>
@@ -54,11 +145,11 @@
                         </li>
                     </ul>
                 </div>
-            </nav>
+            </nav> -->
 
-            <!-- <div class="form-group">
-                <img class="course_icon" src="{% static 'register.png' %}" alt="Register-Now">
-                <h1>New User Registeration:</h1><br>
+            <div class="section">
+                
+                <h3 class="title">New User Registration</h3><br>
                 {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}
@@ -68,14 +159,14 @@
                 {% endif %}
                 <form action="/register" method="POST">
                     {% csrf_token %}
-                    <p>Username: * <input name="username" type="text"></p><br>
-                    <p>Email Address: *<input name="email" type="text"></p><br>
-                    <p>Password: * <input name="password" type="password"></p><br>
-                    <p>Confirm Password: * <input name="confirm" type="password"></p><br>
-                    <p>First Name: * <input name="fname" type="text"></p><br>
-                    <p>Last Name: * <input name="lname" type="text"></p><br>
-                    <p><label for="type-select">License Type *:</label>
-                        <select name="ltype" id="type-select" class="form-control">
+                    <p><label>Username: </label><input name="username" type="text"></p><br>
+                    <p><label>Email Address: </label><input name="email" type="text"></p><br>
+                    <p><label>Password: </label> <input name="password" type="password"></p><br>
+                    <p><label>Confirm Password:</label> <input name="confirm" type="password"></p><br>
+                    <p><label>First Name: </label> <input name="fname" type="text"></p><br>
+                    <p><label>Last Name: </label><input name="lname" type="text"></p><br>
+                    <p><label for="type-select">License Type:</label>
+                        <select name="ltype" id="type-select">
                             <option value="">--Please choose an option--</option>
                             <option value="acupuncturist">Acupuncturist</option>
                             <option value="herbalist">Herbalist</option>
@@ -86,71 +177,23 @@
                             <option value="other">Other</option>
                         </select>
                     </p><br>
-                    <p><label for="type-select">License Board *:</label>
-                        <select name="lboard" id="type-select" class="form-control">
+                    <p><label for="type-select">License Board:</label>
+                        <select name="lboard" id="type-select">
                             <option value="">--Please choose an option--</option>
                             <option value="ca">CA</option>
                             <option value="nccaom">NCCAOM</option>
                             <option value="other">Other</option>
                         </select>
                     </p><br>
-                    <p>License Number: * <input name="lnum" type="text"></p><br>
-                    <p>License Expiration Date: * <input name="lexpire" type="date"></p><br>
-                    <button type="submit" id="btn">Register</button>
-                </form> -->
-            <form>
-                <div class="form-group">
-                    <img class="course_icon" src="{% static 'register.png' %}" alt="Register-Now">
-                    <h1>New User Registeration:</h1><br>
-                    {% if messages %}
-                    <ul class="messages">
-                        {% for message in messages %}
-                        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                    <form action="/register" method="POST">
-                        {% csrf_token %}
-                        <div><label>Username: *</label><input name="username" type="text"></div>
-                        <div ><label>Email Address: *</label><input name="email" type="text"></div>
-                        <div >Password: * <input name="password" type="password"></div>
-                        <div>Confirm Password: * <input name="confirm" type="password"></div>
-                        <div>First Name: * <input name="fname" type="text"></div>
-                        <div>Last Name: * <input name="lname" type="text"></div>
-                        <div><label for="type-select">License Type *:</label>
-                            <select name="ltype" id="type-select" class="form-control">
-                                <option value="">--Please choose an option--</option>
-                                <option value="acupuncturist">Acupuncturist</option>
-                                <option value="herbalist">Herbalist</option>
-                                <option value="physical therapist">Physical Therapist</option>
-                                <option value="chiropractor">Chiropractor</option>
-                                <option value="nurse">Nurse</option>
-                                <option value="massage therapist">Massage Therapist</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div><label for="type-select">License Board *:</label>
-                            <select name="lboard" id="type-select" class="form-control">
-                                <option value="">--Please choose an option--</option>
-                                <option value="ca">CA</option>
-                                <option value="nccaom">NCCAOM</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div><br>
-                        <div>License Number: * <input name="lnum" type="text"></div><br>
-                        <div>License Expiration Date: * <input name="lexpire" type="date"></div><br>
+                    <p><label>License Number:</label> <input name="lnum" type="text"></p><br>
+                    <p><label>License Expiration Date: </label> <input name="lexpire" type="date"></p><br><br>
+                    <input type="image"  class="regbutton" src="/static/newregister.png" alt="Register-Now" width=100px>
+                    <!-- <button type="submit" id="btn">Register</button> -->
+                </form>
+            </div>
+        </div>
     
-                        <button type="submit" id="btn">Register</button>
-                    </form> 
-               
-
-                </div>
-        </div>
-
-        <div class="footer">
-            <a href="#top">Back To Top</a>
-        </div>
-
+            
     </div>
 
 </body>

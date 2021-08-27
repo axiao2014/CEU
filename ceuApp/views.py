@@ -1,6 +1,11 @@
 from django.shortcuts import render, redirect
 from ceuApp.models import *
 import bcrypt
+from django.views.generic.base import TemplateView
+from django.http.response import JsonResponse 
+from django.views.decorators.csrf import csrf_exempt 
+import stripe
+from django.conf import settings
 
 # Create your views here.
 from django.shortcuts import render, HttpResponse
@@ -68,7 +73,7 @@ def login(request):
         errors = {}
         user = User.objects.filter(username=rq['username'])
         if not user:
-            errors['login_error'] = 'Incorrect email or password.'
+            errors['login_error'] = 'Incorrect username or password.'
             for key, value in errors.items():
                 messages.error(request, value)
             return redirect('/login')
@@ -121,7 +126,13 @@ def drop(request, course_id):
     user = User.objects.get(id=request.session['user_id'])
     user.courses.remove(course)
     user.save()
-    return redirect('/')
+    # return redirect('/')
+    # return redirect('/add/%s' % course_id)
+    context = {
+        # 'course_added' : user.courses.get(id=course_id),
+        'course_added' : user.courses.all(),
+    }
+    return redirect('/cart')
 
 def contact(request):
     return render(request, 'contact.html')
@@ -129,6 +140,94 @@ def contact(request):
 def about(request):
     return render(request, 'about.html')
 
-        
-def order(request):
-    return render(request, 'order.html')
+def home(request):
+    return redirect('/')
+
+def order():
+    if 'user_id' in request.session:
+         return redirect('/')
+    if request.method == 'POST':
+        rq = request.POST
+        Order.objects.create(name=rq['ord_dt'])
+
+def cart(request):
+    if 'user_id' not in request.session:
+        return redirect('/')
+
+    user_cart = User.objects.get(id=request.session['user_id'])
+    total = 0
+    unit = 0
+    courses = user_cart.courses.all()
+    for course in courses:
+        total += course.price
+        unit += course.unit
+    print(total)
+    print(unit)
+
+    context = {
+        # 'course_added' : user.courses.get(id=course_id),
+        'course_added' : user_cart.courses.all(),
+        'total' : total,
+        'units' : unit,
+    }
+    return render(request, "add_to_cart.html", context)
+
+def purchase(request):
+    return render(request, 'purchase.html')
+
+def cartpurchase(request):
+    user_cart = User.objects.get(id=request.session['user_id'])
+    courses = user_cart.courses.all()
+    for course in courses:
+        print(course)
+        return(course)
+
+@csrf_exempt
+def stripe_config(request):
+    if request.method == 'GET':
+        stripe_config = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
+        return JsonResponse(stripe_config, safe=False)
+
+@csrf_exempt
+def create_checkout_session(request):
+    if request.method == 'GET':
+        domain_url = 'http://localhost:8000/'
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        user_cart = User.objects.get(id=request.session['user_id'])
+        courses = user_cart.courses.all()
+        try:
+            
+            # Create new Checkout Session for the order
+            # Other optional params include:
+            # [billing_address_collection] - to display billing address details on the page
+            # [customer] - if you have an existing Stripe Customer ID
+            # [payment_intent_data] - capture the payment later
+            # [customer_email] - prefill the email input in the form
+            # For full details see https://stripe.com/docs/api/checkout/sessions/create
+
+            # ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
+            checkout_session = stripe.checkout.Session.create(
+                success_url=domain_url + 'success?session_id={CHECKOUT_SESSION_ID}',
+                cancel_url=domain_url + 'cancelled/',
+                payment_method_types=['card'],
+                mode='payment',
+                line_items=[
+                    {
+                        'name': 'cart item',
+                        'quantity': 1,
+                        'currency': 'usd',
+                        'amount': '10000',
+                    }
+                ]
+            )
+            return JsonResponse({'sessionId': checkout_session['id']})
+        except Exception as e:
+            return JsonResponse({'error': str(e)})
+
+def success(request):
+    return render(request,'success.html')
+
+
+def cancelled(request):
+    return render(request, 'cancelled.html')
+

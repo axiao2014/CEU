@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Django + Stripe Checkout</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css"> -->
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        /* {% load static %}
+        <link rel="stylesheet" href="{% static 'style.css' %}"> */
+        .navbar-brand { 
+            padding-left: 0px;
+
+        }
+        .navbar{
+            margin-bottom: 0;
+            border-radius: 0;
+            background-color: white;
+            height: 100px;
+        }
+        div.container-fluid{
+            padding-top: 40px;
+        }
+
+        .logo{
+            padding-top: ;
+            height: 55px;
+        }
+        .phone {
+            padding-top: 8px;
+        }
+        
+        .navbar-right{
+            display: inline-block;
+        }
+        .glyphicon {
+            display:inline-block;
+        }
+        .glyphicon-log-in{
+            display: inline-block;
+        }
+
+        .thanks{
+          text-align: center;
+          color: gray;
+        }
+        </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button> -->
+          <!-- <a class="navbar-brand" href="#"></a> -->
+          <a href="/home"><img class="logo center-block" src="/static/newnewlogo.png">  </a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            
+          <ul class="nav navbar-nav">
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/about">About Us</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+              
+            <li><h5 class="phone">Phone: (408) 646-6516</h5></li>
+
+            {% if not request.session.user_id %}
+            <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            {% endif %}
+
+            {% if not request.session.user_id %}
+            <li><a href="/register">Register</a></li>
+            {% endif %}
+            {% if request.session.user_id %}
+              <li><a href="/logout">Logout</a></li>
+              
+
+              <li><a href="/cart"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg></a></li>
+                {%endif%}
+              
+          </ul>
+        </div>
+      </div>
+    </nav>
+  <section class="section">
+    <div class="container">
+      <h1 class="thanks">Thank you for your payment!</h1>
+    </div>
+  </section>
+  </body>
+</html>
