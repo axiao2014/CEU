@@ -40,6 +40,19 @@ class UserManager(models.Manager):
             errors['lnum'] = "Please input a valid license number."
         return errors
 
+class OrderManager(models.Manager):
+    def basic_validator(self, post_data):
+        errors={}
+        if len(post_data['address']) == 0:
+            errors['address'] = "Address cannot be blank."
+        if len(post_data['zip_code']) >5:
+            errors['address'] = "Zip code cannot be more than 5 characters."
+        if len(post_data['zip_code']) <5:
+            errors['address'] = "Zip code cannot be less than 5 characters."
+        if len(post_data['city']) ==  0:
+            errors['city'] = "City cannot be blank." 
+        
+
 class User(models.Model):
     admin=models.BooleanField(default=False)
     fname=models.CharField(max_length=40)
@@ -51,12 +64,10 @@ class User(models.Model):
     email=models.EmailField()
     username=models.CharField(max_length=20)
     password=models.TextField()
-    # mailing_address=models.TextField(default="")
     courses=models.ManyToManyField(Course, related_name='courses')
     objects = UserManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
 
 class Order(models.Model):
     ord_dt=models.DateField()
@@ -65,3 +76,13 @@ class Order(models.Model):
     objects = UserManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+# class Billing(models.Model):
+#     street=models.TextField()
+#     street2=models.TextField()
+#     city=models.TextField()
+#     state=models.TextField(max_length=2)
+#     zipcode=models.IntegerField(max_length=5)
+#     user=models.ForeignKey(User, related_name='user', on_delete=models.CASCADE)
+
+

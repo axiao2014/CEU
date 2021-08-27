@@ -10,6 +10,12 @@ urlpatterns = [
     path('destroy/<int:course_id>', views.destroy),
     path('contact', views.contact),
     path('about', views.about),
-    path('order', views.order),
     path('logout', views.logout),
+    path('home', views.home),
+    path('cart', views.cart),
+    path('purchase', views.purchase),
+    path('config/', views.stripe_config),
+    path('create-checkout-session/', views.create_checkout_session),
+    path('success', views.success),
+    path('cancelled/', views.cancelled),
 ]

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add to Cart</title>
+    {% load static %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css"> -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="{% static 'main.js' %}"></script>  
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <!-- load Bootstrap -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <style>
+        /* {% load static %}
+        <link rel="stylesheet" href="{% static 'style.css' %}"> */
+        .navbar-brand { 
+            padding-left: 0px;
+
+        }
+        .navbar{
+            margin-bottom: 0;
+            border-radius: 0;
+            background-color: white;
+            height: 100px;
+        }
+        div.container-fluid{
+            padding-top: 40px;
+        }
+
+        .logo{
+            padding-top: ;
+            height: 55px;
+        }
+        .phone {
+            padding-top: 8px;
+        }
+        
+        .navbar-right{
+            display: inline-block;
+        }
+        .glyphicon {
+            display:inline-block;
+        }
+        .glyphicon-log-in{
+            display: inline-block;
+        }
+
+        .panel{
+            margin-left: 30px;
+        }
+
+        .price{
+            position: relative;;
+        }
+
+        .remove{
+            margin-left: 10px;
+        }
+        .panel-heading{
+            display: flex;
+            justify-content: space-between;
+        }
+        .title{
+            text-align: center;
+        }
+        .button{
+            background-color: #D9EDF7;
+            width: 180px;
+            height: 50px;
+            border-radius: 12px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button> -->
+            <!-- <a class="navbar-brand" href="#"></a> -->
+            <a href="/home"><img class="logo center-block" src="/static/newnewlogo.png">  </a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+              
+            <ul class="nav navbar-nav">
+              <li><a href="/contact">Contact</a></li>
+              <li><a href="/about">About Us</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                
+              <li><h5 class="phone">Phone: (408) 646-6516</h5></li>
+  
+              {% if not request.session.user_id %}
+              <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              {% endif %}
+  
+              {% if not request.session.user_id %}
+              <li><a href="/register">Register</a></li>
+              {% endif %}
+              {% if request.session.user_id %}
+                <li><a href="/logout">Logout</a></li>
+                
+  
+                <li><a href="/cart"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                  </svg></a></li>
+                  {%endif%}
+                
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <!-- <div class="container bg-light text-muted border-bottom"> -->
+        <div class="row">
+            <div class="title col-sm-4 mb-3 p-2">
+                <h3>YOUR SHOPPING CART</h3>
+            </div>
+            <div class="col-sm-8">
+                <a href="/" class="float-right">Retun to View Courses</a>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8">
+                {% for course in course_added  %}
+                <div class="panel panel-info">
+                    <!-- <div class="card-body"> -->
+                        <h5 class="panel-heading"><span>{{ course.name }}</span>
+                            <span>$ {{course.price}}</span>
+                        </h5>
+                        <p class="panel-body body">
+                            <span>Description: {{course.desc}}</span>
+                                <br>
+                                <span>Units: {{ course.unit}}</span></p>
+                        {% if request.session.user_id %}
+                            <a href="/drop/{{course.id}}" class = "remove float-right">Remove from Cart</a>
+                        {% endif %}
+                    <!-- </div> -->
+                </div>
+                {% endfor %}
+        <!-- <table class="table table-sm">
+            <tr>
+                <th>Course Name</th>
+                <th>Units</th>
+                <th>Price</th>
+                <td></td>
+            </tr>
+            {% for course in course_added  %}
+            <tr>
+                <td>{{ course.name }}</td>
+                <td>{{ course.unit}}</td>
+                <td>{{ course.price }}</td>
+                {% if request.session.user_id %}
+                    <td><a href="/drop/{{course.id}}">Remove from Cart</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table> -->
+            </div>
+        <!-- <div class ='row'> -->
+            <div class="col-lg-3 bg-white border">
+                <!-- <div class="middle p-5 mb-10 bg-white"> -->
+                <h3 class="border-bottom">ORDER TOTAL</h3>
+                <div class="mb-3 bg-white">
+                    <h5>Subtotal:<b> $ {{total}}</b></h5>
+                    <p>Total Units Added: <b> {{units}} units</p>
+                    <!-- <a href="/create_order/{{user_cart.id}}"><input class="btn btn-primary" type="submit" value="Place Order"></a> -->
+                    <button class="button is-primary" id="submitBtn">Purchase!</button>
+                </div>
+            </div>
+    <!-- </div> -->
+</body>
+</html>

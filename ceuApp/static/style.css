@@ -1,4 +1,4 @@
-* {
+/* * {
   padding: 0px;
   margin: 0px;
 }
@@ -61,7 +61,7 @@ display: flex;
 text-align: center;
 color: lightgreen;
 overflow: auto;
-}
+} */
 
 /* 
 .main{
@@ -70,17 +70,12 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 font-size: 14px;
 
 } */
-.course_icon {
+/* .course_icon {
   display: block;
   margin: 0px auto;
   width: 40%;
   height: 150px;
   padding: 10px;
-}
-.form-group label {
-  width: 250px;
-  display: inline-block;
-  text-align: right;
 }
 table, th, td {
   border: 1px solid black;
@@ -124,5 +119,11 @@ input {
   justify-content: center; 
  
  
+} */
+
+
+.navbar-brand 
+{
+    inline-bl
+    padding-top: 0;
 }
-  

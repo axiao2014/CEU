@@ -5,15 +5,94 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <style>
+            /* {% load static %}
+            <link rel="stylesheet" href="{% static 'style.css' %}"> */
+            .navbar-brand { 
+                padding-left: 0px;
+
+            }
+            .navbar{
+                margin-bottom: 0;
+                border-radius: 0;
+                background-color: white;
+                height: 100px;
+            }
+            div.container-fluid{
+                padding-top: 40px;
+            }
+
+            .logo{
+                padding-top: ;
+                height: 55px;
+            }
+            .phone {
+                padding-top: 8px;
+            }
+            
+            .navbar-right{
+                display: inline-block;
+            }
+            .glyphicon {
+                display:inline-block;
+            }
+            .glyphicon-log-in{
+                display: inline-block;
+            }
+
+            .section{
+                text-align: center;
+            }
+
+            .fields{
+                padding-right: 80 px;
+            }
+        </style>
+    <!-- {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}"> -->
     <title>CEU</title>
 </head>
 
 <body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button> -->
+            <!-- <a class="navbar-brand" href="#"></a> -->
+            <a href="/home"><img class="logo center-block" src="/static/newnewlogo.png">  </a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+              
+            <ul class="nav navbar-nav">
+              <li><a href="/contact">Contact</a></li>
+              <li><a href="/about">About Us</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                
+              <li><h5 class="phone">Phone: (408) 646-6516</h5></li>
+              
+              {% if not request.session.user_id %}
+              <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              {% endif %}
 
-    <div id="wrapper">
-        <a id="top"></a>
+              {% if not request.session.user_id %}
+              <li><a href="/register">Register</a></li>
+              {% endif %}
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <!-- <div id="wrapper"> -->
+        <!-- <a id="top"></a>
         <div class="header">
             <img class="logo" src="{% static 'logo.png' %}" alt="logo">
             <h1>Call Us: (408)646-6516</h1>
@@ -34,14 +113,14 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/login">Log In</a>
                         </li>
-                        {% endif %}
+                        {% endif %} -->
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="#">CEU Courses >></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">CEU Certificates</a>
                         </li> -->
-                        {% if request.session.user_id %}
+                        <!-- {% if request.session.user_id %}
                         <li class="nav-item">
                             <a class="nav-link" href="/logout">Logout</a>
                         </li>
@@ -54,11 +133,11 @@
                         </li>
                     </ul>
                 </div>
-            </nav>
+            </nav> -->
 
             <div class="section">
-                <img class="course_icon" src="{% static 'login.png' %}" alt="Login">
-                <h1>Log In</h1><br>
+                
+                <h3>Log In</h3><br>
                 {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}
@@ -68,19 +147,21 @@
                 {% endif %}
                 <form action="/login" method="post">
                     {% csrf_token %}
-                    <p>Username: * <input name="username" type="text"></p><br>
-                    <p>Password: * <input name="password" type="password"></p>
-            
-                    <button type="submit" id="btn">Log In</button>
+                    <div class="fields">
+                    <p>Username: <input name="username" type="text"></p><br>
+                    <p>Password: <input name="password" type="password"></p>
+                    <div class="fields">
+
+                    <input type="image" src="/static/newlogin.png" width=100px height=auto>
+                    <!-- <img class="course_icon"  src="/static/newlogin.png" width=100px height=auto type="submit"> -->
                     <!-- <a href="">Forgot Username or Password?</a> -->
                 </form>
             </div>
         </div>
     
-        <div class="footer">
-            <a href="#top">Back To Top</a>
 
     </div>
+    
 
 
 </body>

@@ -13,9 +13,28 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+
 from django.urls import path, include
+from django.contrib import admin
+from ceuApp.models import User as U, Course, Order
+
+class UAdmin(admin.ModelAdmin):
+    pass 
+admin.site.register(U, UAdmin)
+
+class CourseAdmin(admin.ModelAdmin):
+    pass 
+admin.site.register(Course,CourseAdmin)
+
+class OrderAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Order,OrderAdmin)
+
+# class BillingAdmin(admin.ModelAdmin):
+#     pass
+# admin.site.register(Billing,BillingAdmin)
 
 urlpatterns = [
     path('', include('ceuApp.urls')),
+    path('admin/',admin.site.urls),
 ]
